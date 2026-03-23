@@ -1,7 +1,7 @@
 export default {
     root: 'src/',
     publicDir: '../static/',
-    base: './',
+    base: '/Solar-System-3D/',
     server:
     {
         host: true, // Open to local network and display URL

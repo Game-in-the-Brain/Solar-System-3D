@@ -15,7 +15,7 @@ import sunTexture from '/images/sun.jpg';
 import mercuryTexture from '/images/mercurymap.jpg';
 import mercuryBump from '/images/mercurybump.jpg';
 import venusTexture from '/images/venusmap.jpg';
-import venusBump from '/images/venusmap.jpg';
+import venusBump from '/images/venusbump.jpg';
 import venusAtmosphere from '/images/venus_atmosphere.jpg';
 import earthTexture from '/images/earth_daymap.jpg';
 import earthNightTexture from '/images/earth_nightmap.jpg';
@@ -35,6 +35,7 @@ import uranusTexture from '/images/uranus.jpg';
 import uraRingTexture from '/images/uranus_ring.png';
 import neptuneTexture from '/images/neptune.jpg';
 import plutoTexture from '/images/plutomap.jpg';
+import plutoBump from '/images/plutobump2k.jpg';
 
 // ******  SETUP  ******
 console.log("Create the scene");
@@ -522,7 +523,7 @@ const uranus = new createPlanet('Uranus', 25/4, 320, 82, uranusTexture, null, {
   texture: uraRingTexture
 });
 const neptune = new createPlanet('Neptune', 24/4, 340, 28, neptuneTexture);
-const pluto = new createPlanet('Pluto', 1, 350, 57, plutoTexture)
+const pluto = new createPlanet('Pluto', 1, 350, 57, plutoTexture, plutoBump)
 
   // ******  PLANETS DATA  ******
   const planetData = {

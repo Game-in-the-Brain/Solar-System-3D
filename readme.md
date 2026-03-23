@@ -118,6 +118,27 @@ https://YOUR_USERNAME.github.io/Solar-System-3D/
     ```
 5. Open your browser and navigate to the URL shown in the terminal (typically `http://localhost:5173`).
 
+## Roadmap
+
+> Full backlog and feature specifications: **[PRD.md](./PRD.md)**
+
+The visual model is compressed for human-viewable scale — not 1:1. The Logistics Planner (future phase) will use real astronomical distances and physics.
+
+| Phase | Title | What it adds |
+|-------|-------|-------------|
+| 1 | **Data Editor** | Edit any planet/moon property in-browser; export/import as JSON |
+| 2 | **Extend Objects** | Dwarf planets (Ceres, Eris…), space stations, "Add Object" flow |
+| 3 | **INRAS Editor** | Stars, exotic bodies, intrastellar elements — data sheet, orbits, 3D model assignment |
+| 4 | **3D Model Integration** | Plug in GLB assets from the GiB Blender World Generator; ship and habitat models |
+| 5A | **Procedural World Generator** | Noise-based planet surfaces and modular stations generated with code |
+| 5B-L1 | **Logistics: Distances** | Real AU distances, point-to-point calculator, light-travel time |
+| 5B-L2 | **Logistics: Delta-V** | Hohmann transfers, propulsion profiles, fuel-mass budget |
+| 5B-L3 | **Logistics: Travel Time** | Transfer arcs on the 3D view, journey duration in days/months/years |
+| 5B-L4 | **Logistics: Multi-Leg** | Itinerary builder, waypoints, layovers, best-window finder |
+| 5B-L5 | **Logistics: Scheduled Routes** | Repeating routes, ship registry, passenger journey planner, trade network visualiser |
+
+---
+
 ## Conclusion
 This project is a comprehensive representation of our solar system, bringing together realistic modeling, advanced visual effects, and interactive features. Explore the planets, their moons, and the vast asteroid belts, all from the comfort of your screen.
 

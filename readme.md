@@ -63,14 +63,50 @@ Overview available at: https://w21030911.nuwebspace.co.uk/graphics/assessment/
 - [Planet Pixel Emporium](https://planetpixelemporium.com/index.php)
 - [TurboSquid](https://www.turbosquid.com/)
 
-## Installation and Setup
+## Live Demo
+
+**[https://game-in-the-brain.github.io/Solar-System-3D/](https://game-in-the-brain.github.io/Solar-System-3D/)**
+
+---
+
+## Fork & Deploy to GitHub Pages
+
+You can host your own copy for free in about 5 minutes.
+
+### 1. Fork the repository
+Click **Fork** at the top of this page. GitHub will create `https://github.com/YOUR_USERNAME/Solar-System-3D`.
+
+### 2. Update the base path
+Open `vite.config.js` and change the `base` value to match your repository name:
+```javascript
+base: '/Solar-System-3D/',   // keep as-is if your fork keeps the same name
+```
+If you renamed the repository, replace `Solar-System-3D` with your repo name exactly.
+
+### 3. Enable GitHub Pages
+In your forked repository go to **Settings → Pages** and set:
+- **Source:** GitHub Actions
+
+That's it. The included workflow (`.github/workflows/deploy.yml`) will automatically build and deploy whenever you push to `main`.
+
+### 4. Your live URL
+```
+https://YOUR_USERNAME.github.io/Solar-System-3D/
+```
+
+> The first deployment runs automatically after you enable Pages. Subsequent pushes deploy within ~2 minutes.
+
+---
+
+## Local Development
+
 1. Clone the repository:
     ```sh
-    git clone https://github.com/your-username/3d-solar-system.git
+    git clone https://github.com/your-username/Solar-System-3D.git
     ```
 2. Navigate to the project directory:
     ```sh
-    cd 3d-solar-system
+    cd Solar-System-3D
     ```
 3. Install dependencies:
     ```sh
@@ -80,7 +116,7 @@ Overview available at: https://w21030911.nuwebspace.co.uk/graphics/assessment/
     ```sh
     npm run dev
     ```
-5. Open your browser and navigate to `http://localhost:3000` to see the 3D Solar System in action.
+5. Open your browser and navigate to the URL shown in the terminal (typically `http://localhost:5173`).
 
 ## Conclusion
 This project is a comprehensive representation of our solar system, bringing together realistic modeling, advanced visual effects, and interactive features. Explore the planets, their moons, and the vast asteroid belts, all from the comfort of your screen.

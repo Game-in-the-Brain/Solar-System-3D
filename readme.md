@@ -2,6 +2,20 @@
 
 > **Based on the original [3D Solar System](https://github.com/karol-fryc/solar-system-threejs) by Karol Fryc.** This project has diverged significantly from that work and is now developed by [Game in the Brain](https://github.com/Game-in-the-Brain) toward a full Procedural 3D Star System Generator and world-builder toolkit.
 
+## The Problem
+
+> *I want to play a sci-fi setting — and be allowed to learn about the science at my own pace.*
+
+Most science fiction games either hand-wave the physics entirely, or front-load so much technical knowledge that the table never gets past character creation. Neither serves the people at the table who are curious but not yet literate — and neither serves the game master who wants the setting to feel real without becoming a lecture.
+
+Game in the Brain's starting point is a simple observation: **the hard science fiction of 50 to 100 years ago is the common knowledge of today.** Rocketry, nuclear energy, computers, satellite communications, the structure of DNA — these were the speculative frontier once. Writers who used them accurately were writing hard sci-fi. Now they are school curriculum.
+
+The science that feels like hard sci-fi *today* — orbital mechanics, delta-V budgets, Hill sphere dynamics, planetary formation by stellar mass, the logistics of a civilisation spread across multiple star systems with no faster-than-light travel — is simply the common knowledge of 50 to 100 years from now. The people who will take it for granted have not been born yet.
+
+What a gaming group does when it sits down with a procedurally generated star system and asks *"how long does it actually take to get from here to there, and what does that mean for these people?"* is begin that process early. Not because they set out to study astrophysics, but because the question was interesting and the game made it possible to ask it.
+
+**The goal is not to teach. The goal is to make the science explorable at the table's own pace** — so that the lessons arrive through play, through the consequences of decisions, through the moment when a player realises that the outer colony has been functionally independent for three generations not because of politics but because of light-lag.
+
 ## What this is
 
 Solar System 3D is growing into a tool for world builders who want to do more than imagine a setting — they want to *understand* it.

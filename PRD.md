@@ -3,11 +3,13 @@
 
 ---
 
-## Important Disclaimer: Scale & Fidelity
+## Scale: Two Modes, One Data Model
 
-> **This simulation is not 1:1.** Distances, sizes, and orbital periods are compressed to fit a human-viewable screen. The visual model is an artistic representation designed for exploration and education — not a physically accurate simulator.
+> **Presentation Scale** — the compressed, human-viewable representation used in the 3D viewport. Orbital distances and body sizes are scaled down so everything fits on screen. This is the artistic model used for exploration, editing, and navigation.
 >
-> **The Logistics Planner (Phase 3 onward) will use real-world measurements** — actual AU distances, real delta-V figures, and accurate travel time calculations. The 3D viewport will remain compressed for navigation; the calculator will operate on true physics.
+> **Real Distance Scale** — true astronomical measurements: AU, parsecs, km/s, days. Used in the Logistics Planner, the Procedural Star System Generator, and the Real Star Map. Nothing at Real Distance Scale is derived from or constrained by what fits on screen.
+>
+> Every body in the data model carries **both** a `presentation` orbit radius and a `real` semi-major axis / stellar distance. These are never mixed. The 3D viewport renders Presentation Scale; calculators and the star map operate on Real Distance Scale.
 
 ---
 
@@ -18,14 +20,22 @@ Phase 1 ──► Data Editor (planets editable in-browser)
 Phase 2 ──► Extend Objects (dwarf planets, space stations)
 Phase 3 ──► INRAS Editor (intrastellar elements + stars)
 Phase 4 ──► 3D Model Integration (GiB World Generator / Blender)
+Phase 5 ──► Procedural Ship & Habitat/Station Builder
              │
-             ├──► Path A: Procedural World Generator
-             │           (stations + worlds generated with code)
-             │
-             └──► Path B: Logistics Planner
-                         (Delta-V → distances → travel time
-                          → multi-leg → scheduled routes
+             └──► Logistics Planner (L1–L5)
+                         (Distances → Delta-V → Travel Time
+                          → Multi-Leg → Scheduled Routes
                           → intrastellar logistics patterns)
+                         │
+                         └──► Phase 6A: Procedural Star System Generator
+                                        (mneme-world-generator-pwa integration
+                                         — full systems from seed, Real Distance Scale)
+                                        │
+                                        └──► Phase 6B: Real Star Map
+                                                       (Sol-centred, true parsec distances
+                                                        — shift-select → distance/route totals
+                                                        — save/load star systems
+                                                        — click star → load its system)
 ```
 
 ---
@@ -143,33 +153,29 @@ Additional object types beyond stars:
 
 ---
 
-## Phase 5A — Procedural World Generator
+## Phase 5 — Procedural Ship & Habitat/Station Builder
 
-*Parallel path — runs alongside Phase 5B*
+**Goal:** Modular construction of ships and space habitats/stations using module-based geometry, compatible with the GLB model pipeline from Phase 4. Source rules and module definitions from [MNEME Space Combat](https://www.drivethrurpg.com/en/product/434090/Mneme-Space-Combat-full).
 
-**Goal:** Generate planet surfaces, station interiors, and asteroid structures procedurally using code, as a lightweight complement to the Blender pipeline.
+### FR-SHB-01 — Modular Station Builder
+- Core + ring + spoke + docking arm geometry assembled from discrete module meshes
+- Parameters: crew capacity, function (mining / transit / research / military), module count
+- Generates a THREE.js mesh; optionally exports as GLB
 
-### FR-PWG-01 — Procedural Planet Surfaces
-- Noise-based heightmap generator for terrestrial planets
-- Parameters: seed, terrain roughness, water coverage, atmosphere density
-- Output: live THREE.js geometry (no GLB required)
+### FR-SHB-02 — Ship Builder
+- Ship type: moves along a defined trajectory (orbit or point-to-point path)
+- Ships carry idle animation: thruster glow (emissive material pulse), slow yaw rotation
+- Source models and module configs from GiB Ship Generator exports
 
-### FR-PWG-02 — Procedural Station Generation
-- Modular station builder: core + ring + spoke + docking arms
-- Parameters: crew capacity, function (mining / transit / research / military)
-- Generates a THREE.js mesh; optionally exports as GLB for the Blender pipeline
-
-### FR-PWG-03 — Low-LOD Mode
-- Distant objects use procedurally generated low-detail spheres
-- Swap to full model/texture on zoom — same LOD pattern as modern space games
+### FR-SHB-03 — Habitat Interior Data
+- Each habitat carries interior dimension data and docking port count
+- These fields are referenced by the Logistics Planner (Phase L-series) for scheduling and capacity calculations
 
 ---
 
-## Phase 5B — Logistics Planner
+## Phase L — Logistics Planner
 
-*Parallel path — runs alongside Phase 5A*
-
-> **Scale note:** The 3D viewport remains compressed for human-viewable navigation. All Logistics Planner calculations operate on **real astronomical distances and physics** — AU, km/s, days.
+> **Scale note:** The 3D viewport remains at Presentation Scale for navigation. All Logistics Planner calculations operate exclusively on **Real Distance Scale** — AU, km/s, days. The two scales are never mixed.
 
 ### Milestone L1 — Distance Calculator
 
@@ -256,6 +262,99 @@ Additional object types beyond stars:
 
 ---
 
+---
+
+## Phase 6A — Procedural Star System Generator
+
+**Goal:** Generate complete, plausible star systems procedurally from a seed, using the world-generation mechanics defined in the [Mneme World Generator PWA](https://github.com/Game-in-the-Brain/mneme-world-generator-pwa). A generated system is immediately loadable into the Solar System 3D viewport at Presentation Scale, while all underlying data is stored at Real Distance Scale.
+
+> This phase follows the Logistics Planner because it depends on the Real Distance Scale data infrastructure established in L1 (real coordinates, orbital elements) and the INRAS hierarchy from Phase 3. The procedural output must be a first-class citizen of the same data model — not a separate pipeline.
+
+### FR-PSG-01 — Mneme World Generator Integration
+- Consume the star system generation ruleset from `mneme-world-generator-pwa` directly
+- A star system is generated from: seed value, stellar class input (or randomised), number of body slots
+- Output is a fully populated INRAS tree: Level-1 star(s) → Level-2 planets/dwarf planets → Level-3 moons/stations → Level-4+ as needed
+- All orbital data generated at Real Distance Scale (AU, km) with a corresponding Presentation Scale mapping applied automatically
+
+### FR-PSG-02 — Procedural Planet Surfaces
+- Noise-based icosphere displacement for terrestrial planet geometry (no GLB required)
+- Parameters derived from the Mneme World Generator output: terrain type, water coverage, atmosphere density, volcanic activity
+- Technique: layered simplex/Perlin noise applied as per-vertex displacement on a high-subdivision `THREE.IcosahedronGeometry`
+- Parameters are also directly editable via the INRAS Editor (Phase 3) after generation
+
+### FR-PSG-03 — Fractal Mapping
+- Multi-octave fractal Brownian motion (fBm) noise stack extends `FR-PSG-02`
+- Each octave doubles frequency, halves amplitude — produces self-similar terrain at all zoom levels
+- Biome assignment via a `f(altitude, moisture)` lookup table → biome colour/material
+- LOD-aware: base geometry at IcosahedronGeometry detail 2; subdivide and re-displace on camera zoom
+
+### FR-PSG-04 — Icosahedral Map Export
+- Render the procedurally generated planet from a fixed camera set covering all 20 icosahedron faces
+- Composite into a flat icosahedral net image (PNG export)
+- Optional separate heightmap export (grayscale displacement values)
+- Compatible with external world-building tools: Wonderdraft, Inkarnate, GIMP, and `mneme-world-generator-pwa`
+
+### FR-PSG-05 — System Seed & Reproducibility
+- Every generated system is fully determined by its seed value
+- Seed is stored in the system's data JSON — reloading the same seed always produces the same system
+- "Randomise" button generates a new random seed; "Lock" freezes the current result before editing
+
+### FR-PSG-06 — Save Generated System
+- A generated system can be saved to a named slot in `localStorage` (or exported as JSON)
+- Saved systems appear in a system library panel
+- Any saved system can be loaded into the 3D viewport; all INRAS Editor tools remain available on loaded systems
+
+---
+
+## Phase 6B — Real Star Map
+
+**Goal:** A Sol-centred 3D map of the real stellar neighbourhood rendered at true parsec distances. From this map, world builders select actual nearby stars, load their procedurally generated systems, and build out detailed settings grounded in real astrophysics.
+
+> This is the capstone of the entire pipeline. The Real Star Map is the entry point for world builders: real stars → procedurally generated plausible systems (Phase 6A) → detailed by hand using Phases 1–4 tools.
+
+### FR-RSM-01 — Stellar Catalogue Data
+- Ingest a curated subset of the HYG stellar database (or equivalent open catalogue) — all stars within a configurable parsec radius of Sol
+- Each star entry carries: proper name, Bayer/Flamsteed designation, spectral class, real 3D coordinates (parsecs from Sol), apparent magnitude, distance (ly and pc)
+- Includes non-stellar objects in the catalogue where known: brown dwarfs, rogue planets, neutron stars, white dwarfs within range
+- Sol is fixed at the origin (0, 0, 0) in all Real Distance Scale coordinates
+
+### FR-RSM-02 — 3D Star Map Viewport
+- A dedicated **Star Map** mode separate from the Solar System viewport
+- Stars rendered as points/billboards sized by apparent magnitude, coloured by spectral class (OBAFGKM colour ramp)
+- Sol highlighted at centre; navigable with OrbitControls
+- Toggle between flat 2D top-down view and full 3D parallax view
+- Distance rings / parsec grid overlay (toggleable)
+
+### FR-RSM-03 — Shift-Select: Distance Measurement
+- **Shift-click two stars** → displays the straight-line distance between them in parsecs and light-years
+- Distance label floats at the midpoint of the line drawn between the two stars
+- The connecting line persists until cleared or a new selection is made
+
+### FR-RSM-04 — Shift-Select: Multi-Point Route Total
+- **Shift-click three or more stars** → builds a route path in selection order
+- The cumulative parsec total for the entire route is displayed in a panel
+- Each leg's individual distance is shown in a leg-by-leg breakdown
+- Route can be saved as a named travel corridor
+
+### FR-RSM-05 — Save Star System to Slot
+- Any star in the map can have a generated system (Phase 6A) attached to it
+- **Generate System** → runs Phase 6A generation seeded from the star's spectral class and known parameters
+- Generated system is saved to a named slot and appears as a marker on the star map
+- Systems can be exported as JSON and shared between users
+
+### FR-RSM-06 — Load Star System into Viewport
+- **Click any star with a saved system** → loads that system into the Solar System 3D viewport at Presentation Scale
+- The viewport header shows the star's name and real distance from Sol
+- All Phase 1–4 editor tools are available on the loaded system
+- "Return to Star Map" button takes the user back to the Real Star Map without losing the loaded system state
+
+### FR-RSM-07 — World Builder Entry Point
+- The complete user flow: Real Star Map → select a real nearby star → generate a plausible system → load into the 3D viewport → detail with the INRAS Editor, Data Editor, and Procedural Surface tools
+- Multiple users can independently generate and save systems for the same star; seeds and JSON export allow community sharing
+- The aggregate result: a shared, real-star-anchored, procedurally generated interstellar setting — thousands of plausible worlds built from real astrophysical data
+
+---
+
 ## Milestones Summary
 
 | Milestone | Title | Phase | Status |
@@ -264,12 +363,14 @@ Additional object types beyond stars:
 | EX | Extend Objects | 2 | Backlog |
 | INRAS | INRAS Editor | 3 | Backlog |
 | MOD | 3D Model Integration | 4 | Backlog |
-| PWG | Procedural World Generator | 5A | Backlog |
-| L1 | Distance Calculator | 5B | Backlog |
-| L2 | Delta-V Budget | 5B | Backlog |
-| L3 | Travel Time & Visualiser | 5B | Backlog |
-| L4 | Multi-Leg Journeys | 5B | Backlog |
-| L5 | Scheduled Routes & Logistics Patterns | 5B | Backlog |
+| SHB | Ship & Habitat Builder | 5 | Backlog |
+| L1 | Distance Calculator | L | Backlog |
+| L2 | Delta-V Budget | L | Backlog |
+| L3 | Travel Time & Visualiser | L | Backlog |
+| L4 | Multi-Leg Journeys | L | Backlog |
+| L5 | Scheduled Routes & Logistics Patterns | L | Backlog |
+| PSG | Procedural Star System Generator | 6A | Backlog |
+| RSM | Real Star Map | 6B | Backlog |
 
 ---
 
@@ -278,10 +379,16 @@ Additional object types beyond stars:
 | Term | Definition |
 |------|-----------|
 | **INRAS** | Intrastellar Elements — non-planetary significant bodies (stars, exotic objects, megastructures) |
-| **Compressed scale** | The visual model shrinks orbital distances and planet sizes so everything fits on screen |
-| **Real measures** | AU, km, m/s, days — used exclusively in the Logistics Planner calculations |
+| **Presentation Scale** | The compressed visual model used in the 3D viewport — orbital distances and body sizes are scaled down so everything fits on screen. Used for navigation and exploration only. |
+| **Real Distance Scale** | True astronomical measurements: AU, parsecs, km/s, days. Used in the Logistics Planner, the Procedural Star System Generator, and the Real Star Map. Never mixed with Presentation Scale. |
 | **Delta-V** | The change in velocity required to perform a space manoeuvre; the fundamental currency of spaceflight |
 | **Hohmann Transfer** | The minimum-energy elliptical orbit connecting two circular orbits |
 | **Synodic period** | The time between two identical alignments of a planet and Earth as seen from the Sun |
 | **GiB World Generator** | Game in the Brain's Blender-based procedural asset pipeline |
+| **Mneme World Generator PWA** | Game in the Brain's browser-based star system generator — source of world-generation mechanics and the canonical object hierarchy for Phase 6A |
 | **LOD** | Level of Detail — using simpler geometry for distant objects to save performance |
+| **fBm** | Fractal Brownian Motion — multi-octave noise summation used to generate natural-looking terrain at multiple scales |
+| **Icosahedral projection** | A method of unfolding a sphere onto a 2D map using the 20 faces of an icosahedron; minimises distortion vs. Mercator |
+| **HYG database** | A merged star catalogue (Hipparcos, Yale Bright Star, Gliese) used as the source for the Real Star Map stellar data |
+| **Barycenter** | The centre of mass of a multi-body system; the true orbital origin in binary/trinary star configurations |
+| **Parsec** | Unit of stellar distance ≈ 3.26 light-years; the unit used throughout the Real Star Map |

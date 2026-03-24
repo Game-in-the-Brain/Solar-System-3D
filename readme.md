@@ -122,20 +122,29 @@ https://YOUR_USERNAME.github.io/Solar-System-3D/
 
 > Full backlog and feature specifications: **[PRD.md](./PRD.md)**
 
-The visual model is compressed for human-viewable scale — not 1:1. The Logistics Planner (future phase) will use real astronomical distances and physics.
+### A note on scale
+
+This project operates at two distinct scales:
+
+- **Presentation Scale** — the compressed, human-viewable model used in the 3D viewport. Orbital distances and body sizes are scaled down so everything fits on screen. This is the artistic representation you navigate and explore.
+- **Real Distance Scale** — true astronomical measurements: AU, parsecs, km/s, days. Used exclusively in the Logistics Planner and the Real Star Map. Nothing in Real Distance Scale is derived from or limited by what fits on screen.
+
+These two scales coexist in the data model. Every body carries both a `presentation` orbit radius and a `real` semi-major axis. They are never mixed.
 
 | Phase | Title | What it adds |
 |-------|-------|-------------|
 | 1 | **Data Editor** | Edit any planet/moon property in-browser; export/import as JSON |
 | 2 | **Extend Objects** | Dwarf planets (Ceres, Eris…), space stations, "Add Object" flow |
 | 3 | **INRAS Editor** | Stars, exotic bodies, intrastellar elements — data sheet, orbits, 3D model assignment |
-| 4 | **3D Model Integration** | Plug in GLB assets from the GiB Blender World Generator; ship and habitat models |
-| 5A | **Procedural World Generator** | Noise-based planet surfaces and modular stations generated with code |
-| 5B-L1 | **Logistics: Distances** | Real AU distances, point-to-point calculator, light-travel time |
-| 5B-L2 | **Logistics: Delta-V** | Hohmann transfers, propulsion profiles, fuel-mass budget |
-| 5B-L3 | **Logistics: Travel Time** | Transfer arcs on the 3D view, journey duration in days/months/years |
-| 5B-L4 | **Logistics: Multi-Leg** | Itinerary builder, waypoints, layovers, best-window finder |
-| 5B-L5 | **Logistics: Scheduled Routes** | Repeating routes, ship registry, passenger journey planner, trade network visualiser |
+| 4 | **3D Model Integration** | Plug in GLB assets from the Game in the Brain Blender World Generator; ship and habitat models |
+| 5 | **Procedural Ship & Habitat/Station Builder** | Modular ship and habitat/station construction using habitat modules sourced from [MNEME Space Combat](https://www.drivethrurpg.com/en/product/434090/Mneme-Space-Combat-full) |
+| L1 | **Logistics: Distances** | Real AU distances, point-to-point calculator, light-travel time |
+| L2 | **Logistics: Delta-V** | Hohmann transfers, propulsion profiles, fuel-mass budget |
+| L3 | **Logistics: Travel Time** | Transfer arcs on the 3D view, journey duration in days/months/years |
+| L4 | **Logistics: Multi-Leg** | Itinerary builder, waypoints, layovers, best-window finder |
+| L5 | **Logistics: Scheduled Routes** | Repeating routes, ship registry, passenger journey planner, trade network visualiser |
+| 6A | **Procedural Star System Generator** | Full star systems generated procedurally using the [Mneme World Generator](https://github.com/Game-in-the-Brain/mneme-world-generator-pwa) ruleset — stars, planets, moons, INRAS bodies, and orbital data all generated from seed. Systems display at Presentation Scale in the 3D viewport; all underlying data is at Real Distance Scale. |
+| 6B | **Real Star Map** | Sol-centred 3D map of nearby stars at true parsec distances. Shift-select any two stars to read the distance between them; shift-select multiple stars to total the parsecs along a route. Save generated star systems to named slots. Click any star to load its full procedurally generated system into the 3D viewport. The complete pipeline: real stellar neighbourhood → procedurally generated plausible worlds → detailed by world builders. |
 
 ---
 

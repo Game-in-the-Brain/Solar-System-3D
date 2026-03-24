@@ -1,8 +1,18 @@
-# 3D Solar System in THREE.js
+# Solar System 3D — Procedural Star System Visualiser
 
-Welcome to the **3D Solar System** project, a dynamic and interactive simulation of our solar system created using THREE.js and the Vite framework. This project showcases various advanced features and effects to provide an immersive experience of the celestial bodies in our solar system. The project is fully created by Karol Fryc.
+> **Based on the original [3D Solar System](https://github.com/karol-fryc/solar-system-threejs) by Karol Fryc.** This project has diverged significantly from that work and is now developed by [Game in the Brain](https://github.com/Game-in-the-Brain) toward a full Procedural 3D Star System Generator and world-builder toolkit.
 
-Overview available at: https://w21030911.nuwebspace.co.uk/graphics/assessment/
+## What this is
+
+Solar System 3D is growing into a tool for world builders who want to do more than imagine a setting — they want to *understand* it.
+
+Using the **[Mneme World Generator](https://github.com/Game-in-the-Brain/mneme-world-generator-pwa)** as its generation engine — a system grounded in Stellar Mass, Planetary Formation rules, Hill Sphere Radius positioning, and Waterfall Main World Creation — this tool will allow you to generate complete, physically plausible star systems from first principles and then explore them in a live 3D viewport.
+
+But generation is only the beginning. The long-term goal is a **Realistic Travel Planner**: Delta-V budgets, Hohmann transfer windows, multi-leg itineraries, and scheduled trade routes — so that the distances and travel times between worlds are not just numbers in a rulebook, but things you can see, measure, and feel in three dimensions.
+
+Distance and time are the invisible architects of every civilisation. A colony 0.3 AU from its sun lives in a different world than one at 2 AU — different day length, different seasons, different communication lag with home. A civilisation spread across three stars with no faster-than-light travel is not one civilisation at all, but several, slowly diverging. This tool is designed to make those realities visible.
+
+For TTRPG game masters and players running hard-science campaigns, the aim is a shared library of detailed, internally consistent star systems — built by world builders, published for the community, playable and explorable by anyone. And to demonstrate something counterintuitive: that a handful of nearby stars, rendered at true scale, contains room for **trillions of people across thousands of worlds** — that the universe does not need to be infinite to be endless.
 
 ![Solar_System](images/solar_system.png)
 
@@ -148,8 +158,13 @@ These two scales coexist in the data model. Every body carries both a `presentat
 
 ---
 
-## Conclusion
-This project is a comprehensive representation of our solar system, bringing together realistic modeling, advanced visual effects, and interactive features. Explore the planets, their moons, and the vast asteroid belts, all from the comfort of your screen.
+## The Vision
+
+Start with a real star. Look it up on the Real Star Map — Alpha Centauri, Tau Ceti, 61 Cygni — and generate its system from the Mneme World Generator rules. Load it into the 3D viewport. Place your worlds. Plan a trade route from the inner habitable zone to the ice miners at the system's edge. Calculate how long the mail takes. Understand why the outer colonies think differently.
+
+Then share it. Another world builder loads your system, extends it, adds a station, plans a different route. A game master runs a campaign in it. Players make decisions shaped by real orbital mechanics — not because they studied astrophysics, but because the tool showed them.
+
+A civilisation of a trillion people living across five stars in a 4-parsec bubble of space. Every world procedurally generated, every travel time calculated from real delta-V, every trade route a line on a map that means something. That is a setting worth exploring.
 
 ## License
 

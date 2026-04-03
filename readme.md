@@ -1,6 +1,8 @@
 # Solar System 3D — Procedural Star System Visualiser
 
-> **Based on the original [3D Solar System](https://github.com/karol-fryc/solar-system-threejs) by Karol Fryc.** This project has diverged significantly from that work and is now developed by [Game in the Brain](https://github.com/Game-in-the-Brain) toward a full Procedural 3D Star System Generator and world-builder toolkit.
+> **Based on the original [3D Solar System](https://github.com/Yash-karki/Solar_System) by Karol Fryc.** This project has diverged significantly from that work and is now developed by [Game in the Brain](https://github.com/Game-in-the-Brain) toward a full Procedural 3D Star System Generator and world-builder toolkit.
+
+https://w21030911.nuwebspace.co.uk/graphics/assessment/ (link to the 3d Solar system)
 
 ## The Problem
 

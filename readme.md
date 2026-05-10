@@ -1,5 +1,7 @@
 # Solar System 3D — Procedural Star System Visualiser
 
+**Products:** [https://blog.gi7b.org](https://blog.gi7b.org)
+
 > **Based on the original [3D Solar System](https://github.com/Yash-karki/Solar_System) by Karol Fryc.** This project has diverged significantly from that work and is now developed by [Game in the Brain](https://github.com/Game-in-the-Brain) toward a full Procedural 3D Star System Generator and world-builder toolkit.
 
 https://w21030911.nuwebspace.co.uk/graphics/assessment/ (link to the 3d Solar system)
@@ -91,7 +93,7 @@ For TTRPG game masters and players running hard-science campaigns, the aim is a 
 
 ## Live Demo
 
-**[https://game-in-the-brain.github.io/Solar-System-3D/](https://game-in-the-brain.github.io/Solar-System-3D/)**
+**[https://pages.gi7b.org/gi7b/Solar-System-3D/](https://pages.gi7b.org/gi7b/Solar-System-3D/)**
 
 ---
 
